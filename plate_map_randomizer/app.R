@@ -1,15 +1,10 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+
+#Written by Silvio Ortiz Aburto
+#July 2019
 
 library(shiny)
+library(shinyjs)
 library(tidyverse)
-library(shinythemes)
 
 ui <- fluidPage(
     tags$head(includeCSS(file.path("www", "style.css"))),
@@ -24,7 +19,7 @@ ui <- fluidPage(
           a("Silvio Ortiz", href = "https://www.linkedin.com/in/silvio-ortiz-aburto/"),
           HTML("&bull;"),
           span("Code"),
-          a("on GitHub", href = "https://github.com/daattali/shiny-server/tree/master/cancer-data"),br(),
+          a("on GitHub", href = "https://github.com/SilvioAburto/micro_plate_randomizer"),br(),
           span("July, 2019")
         )
       ),
@@ -60,12 +55,12 @@ server <- function(input, output) {
    
   #Assign variables
   #fixed
-  # columns <- list(seq(from=1, to=12),seq(from=1,to=8), seq(from=1,to=6))
-  # rows <- list(c("A","B","C","D","E","F","G","H"), c("A","B","C","D","E","F"), c("A","B","C","D") )
-  # wells_n <- c(96,48,24)
-  # 
-  # 
-  # #Fixed
+  columns <- list(seq(from=1, to=12),seq(from=1,to=8), seq(from=1,to=6))
+  rows <- list(c("A","B","C","D","E","F","G","H"), c("A","B","C","D","E","F"), c("A","B","C","D") )
+  wells_n <- c(96,48,24)
+  
+  
+  # for testing
   # rows_sequence <- paste(rep(rows[[2]],length(columns[[2]])))
   # column_sequence <-rep(columns[[2]], each=length(rows[[2]]))
   # wells<- paste(rows_sequence,column_sequence, sep="")
@@ -147,9 +142,7 @@ server <- function(input, output) {
     sliderInput("rep_var","Select Replication", min= 1, max=strain_rep(), value=strain_rep(), step=1)
   })
   
-  print(length(strains))
-  print(input$rep_var)
- 
+
   #show selected replicate
   output$rep_number <- renderUI({
     HTML(paste("Replicate number: ", input$rep_var,
